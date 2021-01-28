@@ -1,14 +1,38 @@
 import React, { useState } from 'react'
+
 import parse from 'html-react-parser'
+import styled from 'styled-components'
+import { useHistory } from 'react-router-dom';
+
+import { useDispatch } from "react-redux";
+import { user } from "../reducers/user";
+import { webshop } from "../reducers/webshop";
+
+
+const InputContainer = styled.form`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  list-style-type:none;
+  margin-bottom: 10px;
+`
+
+const InputLabel = styled.label`
+  display: flex;
+  flex-direction: column;
+`
 
 export const Form = () => {
   
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [input, setInput] = useState({});
   const [checkout, setCheckout] = useState(null)
 
   const handleSignup = (event) => {
     event.preventDefault()
-    console.log(input, "frontend input")
+    dispatch(user.actions.setUserDetails({ userDetails: input }));
 
     fetch('http://localhost:8080/checkout', {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -69,6 +93,8 @@ export const Form = () => {
       })
       .then((json) => {
         setCheckout(json)
+        dispatch(webshop.actions.setSnippet({ snippet: json }));
+        history.push("/checkout")
         console.log(json)
       })
       .catch((error) => console.error(error))
@@ -76,10 +102,11 @@ export const Form = () => {
   };
 
   return (
+    <div>
     <section>
-      <form onSubmit={handleSignup}>
+      <InputContainer onSubmit={handleSignup}>
         <p>Please sign up below.</p>
-        <label>
+        <InputLabel>
           Organization number:
           <input
             required
@@ -88,8 +115,8 @@ export const Form = () => {
             value={input.orgNo}
             name="orgno"
             onChange={({target}) => setInput(state => ({...state,orgNo:target.value}))} />
-        </label>
-        <label>
+        </InputLabel>
+        <InputLabel>
           Company name:
           <input
             required
@@ -98,8 +125,8 @@ export const Form = () => {
             value={input.companyName}
             name="compname"
             onChange={({target}) => setInput(state => ({...state,companyName:target.value}))} />
-        </label>
-        <label>
+        </InputLabel>
+        <InputLabel>
           First Name:
           <input
             required
@@ -108,8 +135,8 @@ export const Form = () => {
             value={input.firstName}
             name="firstname"
             onChange={({target}) => setInput(state => ({...state,firstName:target.value}))} />
-        </label>
-        <label>
+        </InputLabel>
+        <InputLabel>
           Last Name:
           <input
             required
@@ -118,8 +145,8 @@ export const Form = () => {
             value={input.lastName}
             name="lastname"
             onChange={({target}) => setInput(state => ({...state,lastName:target.value}))} />
-        </label>
-        <label>
+        </InputLabel>
+        <InputLabel>
           Street address:
           <input
             required
@@ -128,8 +155,8 @@ export const Form = () => {
             value={input.streetAddress}
             name="streetaddr"
             onChange={({target}) => setInput(state => ({...state,streetAddress:target.value}))} />
-        </label>
-        <label>
+        </InputLabel>
+        <InputLabel>
           zip:
           <input
             required
@@ -138,8 +165,8 @@ export const Form = () => {
             value={input.zipCode}
             name="zipcode"
             onChange={({target}) => setInput(state => ({...state,zipCode:target.value}))} />
-        </label>
-        <label>
+        </InputLabel>
+        <InputLabel>
           city:
           <input
             required
@@ -148,8 +175,8 @@ export const Form = () => {
             value={input.city}
             name="city"
             onChange={({target}) => setInput(state => ({...state,city:target.value}))} />
-        </label>
-        <label>
+        </InputLabel>
+        <InputLabel>
           cellno:
           <input
             required
@@ -158,8 +185,8 @@ export const Form = () => {
             value={input.cellNo}
             name="cellno"
             onChange={({target}) => setInput(state => ({...state,cellNo:target.value}))} />
-        </label>
-        <label>
+        </InputLabel>
+        <InputLabel>
           Email:
           <input
             required
@@ -168,8 +195,8 @@ export const Form = () => {
             value={input.email}
             name="email"
             onChange={({target}) => setInput(state => ({...state,email:target.value}))} />
-        </label>
-        <label>
+        </InputLabel>
+        <InputLabel>
           Password:
           <input
             required
@@ -178,13 +205,20 @@ export const Form = () => {
             value={input.password}
             name="password"
             onChange={({target}) => setInput(state => ({...state,password:target.value}))} />
-        </label>
-        <button type="submit" >Fetch checkout</button>
-      </form>
+        </InputLabel>
+        <button type="submit">Create account</button>
+      </InputContainer>
+    </section>
 
-      <div>
+    <div>
       {checkout && parse(checkout.snippet.snippet)} 
     </div>
-    </section>
+  
+    
+    </div>
+    
+
   );
+
+  
 }
