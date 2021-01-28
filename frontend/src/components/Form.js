@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 
-import parse from 'html-react-parser'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom';
 
-import { useDispatch } from "react-redux";
+import { useDispatch, batch } from "react-redux";
 import { user } from "../reducers/user";
-import { webshop } from "../reducers/webshop";
+
 
 
 const InputContainer = styled.form`
@@ -30,74 +29,13 @@ export const Form = () => {
   const [input, setInput] = useState({});
   const [checkout, setCheckout] = useState(null)
 
-  const handleSignup = (event) => {
-    event.preventDefault()
-    dispatch(user.actions.setUserDetails({ userDetails: input }));
+  const handleSignup = () => {
 
-    fetch('http://localhost:8080/checkout', {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      headers: {
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify(
-        {
-          "currency": "SEK",
-          "locale": "sv-se",
-          "country": "SE",
-          "amount": 1337,
-          "cart": [
-            {
-              "producttype": "physical",
-              "reference": "greenboard2",
-              "name": "Green board 2m",
-              "quantity": 2,
-              "quantityunit": "pc",
-              "unitprice": 1200,
-              "taxrate": 2500,
-              "discount": 0
-            }
-          ],
-          "merchanturls": {
-            "terms": "https://merchant.com/terms",
-            "notifications": "https://merchant.com/api/briqpaycallback",
-            "redirecturl": "https://merchant.com/thankyou"
-          },
-          "merchantconfig": {
-            "maxamount": true,
-            "creditscoring": true
-          },
-          "reference": {
-            "reference1": "string",
-            "reference2": "string"
-          },
-          "orgnr": `${input.orgNo}`,
-          "billingaddress": {
-            "companyname": `${input.companyName}`,
-            "firstname": `${input.firstName}`,
-            "lastname": `${input.lastName}`,
-            "streetaddress": `${input.streetAddress}`,
-            "zip": `${input.zipCode}`,
-            "city": `${input.city}`,
-            "cellno": `${input.cellNo}`,
-            "email": `${input.email}`
-          }
-        }
-      )
+    batch(() => {
+      dispatch(user.actions.setUserDetails({ userDetails: input }))
+      history.push("/checkout")
     })
-      .then((res) => {
-        if (!res.ok) {
-          throw "Fetch checkout failed"
-        }
-        return res.json()
-      })
-      .then((json) => {
-        setCheckout(json)
-        dispatch(webshop.actions.setSnippet({ snippet: json }));
-        history.push("/checkout")
-        console.log(json)
-      })
-      .catch((error) => console.error(error))
+
 
   };
 
@@ -209,16 +147,6 @@ export const Form = () => {
         <button type="submit">Create account</button>
       </InputContainer>
     </section>
-
-    <div>
-      {checkout && parse(checkout.snippet.snippet)} 
     </div>
-  
-    
-    </div>
-    
-
   );
-
-  
 }
