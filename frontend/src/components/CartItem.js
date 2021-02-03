@@ -12,7 +12,7 @@ export const CartItem = ({ product }) => {
       <span className="emoji" role="img" aria-label={product.title}>{product.emoji}</span>
       <div className="info">
         <span className="quantity">x{product.quantity}</span>
-        <span className="sum">{product.price * product.quantity}:-</span>
+        <span className="sum">{product.unitprice * product.quantity}:-</span>
       </div>
 
       <span className="actions">

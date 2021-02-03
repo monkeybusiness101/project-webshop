@@ -7,10 +7,13 @@ import { Cart } from './Cart'
 import { Products } from './Products'
 import { handleSignup } from '../reducers/user'
 
-export const Checkout = ( {input} ) => {
+
+
+export const Checkout = () => {
 
   const dispatch = useDispatch()
   const checkout = useSelector((store) => store.webshop.items.snippet.snippet.snippet)
+  const accessToken = useSelector((store) => store.user.login.accessToken )
 
   const handleClick = () => {
     dispatch(handleSignup())
@@ -19,11 +22,13 @@ export const Checkout = ( {input} ) => {
   return (
 
     <div>
+      
       <Cart />
       <Products />
-      <button type="submit" onClick={handleClick}>Create account</button>
-      {checkout && <div>{parse(checkout)}</div>} 
+      { <button type="submit" onClick={handleClick}>Render checkout</button> }
+      { checkout && <div>{parse(checkout)}</div> } 
       <p><Link to={"/"}>Back</Link></p>
+      
     </div>
   )
 

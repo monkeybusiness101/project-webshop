@@ -1,13 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const productData = [
-  { id: 1, title: 'Socks', price: 100, emoji: '🧦' },
-  { id: 2, title: 'T-shirt', price: 200, emoji: '👕' },
-  { id: 3, title: 'Pants', price: 350, emoji: '👖' },
-  { id: 4, title: 'Dress', price: 550, emoji: '👗' }
+const initialState = [
+  {
+    "producttype": "physical",
+    "reference": "Hej Mats",
+    "name": "Green board 2m",
+    "quantity": 1,
+    "quantityunit": "pc",
+    "unitprice": 1200,
+    "taxrate": 2500,
+    "discount": 0
+    }
 ]
 
 export const products = createSlice({
   name: 'products',
-  initialState: productData
+  initialState
 })
+

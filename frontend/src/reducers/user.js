@@ -1,15 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { webshop } from "../reducers/webshop";
+import { createSlice } from "@reduxjs/toolkit"
+import { webshop } from "../reducers/webshop"
 
 
 const initialState = {
   login: {
     userDetails: {},
     accessToken: "",
-    userId: "",
-    alias: "",
+    userId: ""
   },
-};
+}
 
 export const user = createSlice({
   name: "user",
@@ -35,18 +34,20 @@ export const user = createSlice({
       state.login.accessToken = "";
     },
     deleteUserId: (state, action) => {
-      state.login.userId = "";
+      state.login.userId = ""
     },
   }
 
-});
+})
 
 export const handleSignup = () => {
 
   return (dispatch,getState) => {
 
     const data = getState()
-    console.log(data)
+    const totalPrice = Math.floor(data.webshop.items.cart[0].unitprice * data.webshop.items.cart[0].quantity)
+    const cart = data.webshop.items.cart
+    console.log(data.webshop.items.cart)
 
   fetch('http://localhost:8080/checkout', {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -59,19 +60,9 @@ export const handleSignup = () => {
         "currency": "SEK",
         "locale": "sv-se",
         "country": "SE",
-        "amount": 1337,
-        "cart": [
-          {
-            "producttype": "physical",
-            "reference": "greenboard2",
-            "name": "Green board 2m",
-            "quantity": 2,
-            "quantityunit": "pc",
-            "unitprice": 1200,
-            "taxrate": 2500,
-            "discount": 0
-          }
-        ],
+        "amount": totalPrice,
+        "cart": cart
+        ,
         "merchanturls": {
           "terms": "https://merchant.com/terms",
           "notifications": "https://merchant.com/api/briqpaycallback",
@@ -106,10 +97,41 @@ export const handleSignup = () => {
       return res.json()
     })
     .then((json) => {
-      dispatch(webshop.actions.setSnippet({ snippet: json }));
+      dispatch(webshop.actions.setSnippet({ snippet: json }))
       console.log(json)
     })
     .catch((error) => console.error(error))
 
  }
 }
+
+export const handleCreateAccount = () => {
+  console.log('create account')
+  return (dispatch, getState, state) => {
+
+    const data = getState()
+    console.log(data.user.login.userDetails.email)
+      
+      fetch('http://localhost:8080/users', {
+        method: "POST",
+        body: JSON.stringify({ email:`${data.user.login.userDetails.email}`, password:`${data.user.login.userDetails.password}` }),
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((res) => {
+          if (!res.ok) {
+            // eslint-disable-next-line
+            throw "Signup failed";
+          }
+          return res.json();
+        })
+        .then((json) => {
+
+          console.log(json)
+          dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }));
+          dispatch(user.actions.setUserId({ userId: json.userId }));
+        })
+        .catch((error) => console.error(error))
+      
+    }
+}
+

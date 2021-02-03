@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom';
-
 import { useDispatch, batch } from "react-redux";
+
 import { user } from "../reducers/user";
-
-
+import { handleCreateAccount } from '../reducers/user'
 
 const InputContainer = styled.form`
   display: flex;
@@ -27,12 +26,13 @@ export const Form = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [input, setInput] = useState({});
-  const [checkout, setCheckout] = useState(null)
+  const [loggedIn, setLoggedIn] = useState(false)
 
   const handleSignup = () => {
 
     batch(() => {
       dispatch(user.actions.setUserDetails({ userDetails: input }))
+      dispatch(handleCreateAccount())
       history.push("/checkout")
     })
 
@@ -47,8 +47,7 @@ export const Form = () => {
         <InputLabel>
           Organization number:
           <input
-            required
-            minLength="5"
+            
             type="orgno"
             value={input.orgNo}
             name="orgno"
@@ -57,8 +56,7 @@ export const Form = () => {
         <InputLabel>
           Company name:
           <input
-            required
-            minLength="5"
+           
             type="compname"
             value={input.companyName}
             name="compname"
@@ -67,8 +65,7 @@ export const Form = () => {
         <InputLabel>
           First Name:
           <input
-            required
-            minLength="5"
+            
             type="firstname"
             value={input.firstName}
             name="firstname"
@@ -77,8 +74,7 @@ export const Form = () => {
         <InputLabel>
           Last Name:
           <input
-            required
-            minLength="5"
+            
             type="lastname"
             value={input.lastName}
             name="lastname"
@@ -87,8 +83,7 @@ export const Form = () => {
         <InputLabel>
           Street address:
           <input
-            required
-            minLength="5"
+           
             type="streetaddr"
             value={input.streetAddress}
             name="streetaddr"
@@ -97,8 +92,7 @@ export const Form = () => {
         <InputLabel>
           zip:
           <input
-            required
-            minLength="5"
+          
             type="zipcode"
             value={input.zipCode}
             name="zipcode"
@@ -107,8 +101,7 @@ export const Form = () => {
         <InputLabel>
           city:
           <input
-            required
-            minLength="5"
+          
             type="city"
             value={input.city}
             name="city"
@@ -117,8 +110,7 @@ export const Form = () => {
         <InputLabel>
           cellno:
           <input
-            required
-            minLength="5"
+           
             type="cellno"
             value={input.cellNo}
             name="cellno"
@@ -127,8 +119,7 @@ export const Form = () => {
         <InputLabel>
           Email:
           <input
-            required
-            minLength="5"
+          
             type="email"
             value={input.email}
             name="email"
@@ -137,8 +128,7 @@ export const Form = () => {
         <InputLabel>
           Password:
           <input
-            required
-            minLength="5"
+            
             type="password"
             value={input.password}
             name="password"
