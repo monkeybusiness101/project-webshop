@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import styled from 'styled-components'
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, batch } from "react-redux";
 
 import { user } from "../reducers/user";
@@ -35,8 +35,6 @@ export const Form = () => {
       dispatch(handleCreateAccount())
       history.push("/checkout")
     })
-
-
   };
 
   return (
@@ -46,8 +44,7 @@ export const Form = () => {
         <p>Please sign up below.</p>
         <InputLabel>
           Organization number:
-          <input
-            
+          <input 
             type="orgno"
             value={input.orgNo}
             name="orgno"
@@ -56,7 +53,6 @@ export const Form = () => {
         <InputLabel>
           Company name:
           <input
-           
             type="compname"
             value={input.companyName}
             name="compname"
@@ -65,7 +61,6 @@ export const Form = () => {
         <InputLabel>
           First Name:
           <input
-            
             type="firstname"
             value={input.firstName}
             name="firstname"
@@ -73,8 +68,7 @@ export const Form = () => {
         </InputLabel>
         <InputLabel>
           Last Name:
-          <input
-            
+          <input    
             type="lastname"
             value={input.lastName}
             name="lastname"
@@ -83,7 +77,6 @@ export const Form = () => {
         <InputLabel>
           Street address:
           <input
-           
             type="streetaddr"
             value={input.streetAddress}
             name="streetaddr"
@@ -92,7 +85,6 @@ export const Form = () => {
         <InputLabel>
           zip:
           <input
-          
             type="zipcode"
             value={input.zipCode}
             name="zipcode"
@@ -101,7 +93,6 @@ export const Form = () => {
         <InputLabel>
           city:
           <input
-          
             type="city"
             value={input.city}
             name="city"
@@ -110,7 +101,6 @@ export const Form = () => {
         <InputLabel>
           cellno:
           <input
-           
             type="cellno"
             value={input.cellNo}
             name="cellno"
@@ -119,7 +109,6 @@ export const Form = () => {
         <InputLabel>
           Email:
           <input
-          
             type="email"
             value={input.email}
             name="email"
@@ -128,7 +117,6 @@ export const Form = () => {
         <InputLabel>
           Password:
           <input
-            
             type="password"
             value={input.password}
             name="password"
@@ -137,6 +125,7 @@ export const Form = () => {
         <button type="submit">Create account</button>
       </InputContainer>
     </section>
+    <p>Already a member? Please login <Link to={"/login"}>here</Link>.</p>
     </div>
   );
 }

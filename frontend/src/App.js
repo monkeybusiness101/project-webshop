@@ -6,6 +6,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { Form } from './components/Form'
 import { Checkout } from './components/Checkout'
+import Login from './components/Login'
+import { Confirmation } from './components/Confirmation'
 import { user } from 'reducers/user';
 import { webshop } from 'reducers/webshop';
 import { products } from 'reducers/products';
@@ -27,8 +29,14 @@ export const App = () => {
           <Route path="/" exact>
             <Form />
           </Route>
+          <Route path="/login" exact>
+            <Login />
+          </Route>
           <Route path="/checkout" exact>
             <Checkout />
+          </Route>
+          <Route path="/confirmation" exact>
+            <Confirmation />
           </Route>
         </Switch>
       </Provider>

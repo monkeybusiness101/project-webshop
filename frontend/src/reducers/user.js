@@ -66,7 +66,7 @@ export const handleSignup = () => {
         "merchanturls": {
           "terms": "https://merchant.com/terms",
           "notifications": "https://merchant.com/api/briqpaycallback",
-          "redirecturl": "https://merchant.com/thankyou"
+          "redirecturl": "http://localhost:3000/confirmation"
         },
         "merchantconfig": {
           "maxamount": true,
