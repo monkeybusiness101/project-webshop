@@ -48,7 +48,7 @@ const Login = () => {
   return (
     <>
         <section>
-          <h1>Welcome to Max and Sandrine's app!</h1>
+          <h1>Welcome to monkeybusiness webshop</h1>
           <form onSubmit={handleLogin}>
             <p>Please enter your credentials below.</p>
             <label>

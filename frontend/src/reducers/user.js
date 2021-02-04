@@ -45,8 +45,9 @@ export const handleSignup = () => {
   return (dispatch,getState) => {
 
     const data = getState()
-    const totalPrice = Math.floor(data.webshop.items.cart[0].unitprice * data.webshop.items.cart[0].quantity)
+    const totalPrice = Math.floor(data.webshop.items?.cart[0]?.unitprice * data.webshop.items?.cart[0]?.quantity)
     const cart = data.webshop.items.cart
+    const id = data.user.login.userId
     console.log(data.webshop.items.cart)
 
   fetch('http://localhost:8080/checkout', {
@@ -64,9 +65,9 @@ export const handleSignup = () => {
         "cart": cart
         ,
         "merchanturls": {
-          "terms": "https://merchant.com/terms",
-          "notifications": "https://merchant.com/api/briqpaycallback",
-          "redirecturl": "http://localhost:3000/confirmation"
+          "terms": "https://mentimeter.com",
+          "notifications": "https://mentimeter.com",
+          "redirecturl": `http://localhost:3000/confirmation/${id}`
         },
         "merchantconfig": {
           "maxamount": true,
@@ -106,15 +107,24 @@ export const handleSignup = () => {
 }
 
 export const handleCreateAccount = () => {
-  console.log('create account')
-  return (dispatch, getState, state) => {
+  return (dispatch, getState) => {
 
     const data = getState()
-    console.log(data.user.login.userDetails.email)
       
       fetch('http://localhost:8080/users', {
         method: "POST",
-        body: JSON.stringify({ email:`${data.user.login.userDetails.email}`, password:`${data.user.login.userDetails.password}` }),
+        body: JSON.stringify({ 
+          email:`${data.user.login.userDetails.email}`, 
+          password:`${data.user.login.userDetails.password}`, 
+          orgnr:`${data.user.login.userDetails.orgNo}`,
+          companyname: `${data.user.login.userDetails.companyName}`,
+          firstname: `${data.user.login.userDetails.firstName}`,
+          lastname: `${data.user.login.userDetails.lastName}`,
+          streetaddress: `${data.user.login.userDetails.streetAddress}`,
+          zip: `${data.user.login.userDetails.zipCode}`,
+          city: `${data.user.login.userDetails.city}`,
+          cellno: `${data.user.login.userDetails.cellNo}`, 
+        }),
         headers: { "Content-Type": "application/json" },
       })
         .then((res) => {
@@ -133,5 +143,31 @@ export const handleCreateAccount = () => {
         .catch((error) => console.error(error))
       
     }
+}
+
+export const handleUser = () => {
+  return (dispatch, getState) => {
+
+    const data = getState()
+    const accessToken = data.user.login.accessToken
+    const userId = data.user.login.userId
+      
+      fetch('http://localhost:8080/profile', {
+        method: "GET",
+        headers: { Authorization: accessToken, userId: userId },
+      })
+        .then((res) => {
+          if (!res.ok) {
+            // eslint-disable-next-line
+            throw "Failed to retrieve profile";
+          }
+          return res.json();
+        })
+        .then((json) => {
+          dispatch(user.actions.setUserDetails({ userDetails: json }));
+          console.log(json)
+        })
+        .catch((err) => console.error(err))
+    };
 }
 
