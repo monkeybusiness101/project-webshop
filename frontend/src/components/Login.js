@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from 'react-router-dom';
 
 import { user } from "../reducers/user";
@@ -8,19 +8,19 @@ import { user } from "../reducers/user";
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const sessionToken = localStorage.getItem("sessionToken");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [response, setResponse] = useState(true);
+
+  const loggedIn = useSelector((store) => store.user.login?.loggedIn)
+
 
   const handleCredentials = (credentials) => {
     localStorage.setItem("sessionToken", credentials.accessToken);
     localStorage.setItem("sessionId", credentials.userId);
-    localStorage.setItem("sessionAlias", credentials.alias);
     dispatch(user.actions.setAccessToken({ accessToken: credentials.accessToken }));
     dispatch(user.actions.setUserId({ userId: credentials.userId }));
-    dispatch(user.actions.setAlias({ alias: credentials.alias }));
+
   };
 
   const handleLogin = (event) => {
@@ -32,21 +32,21 @@ const Login = () => {
     })
       .then((res) => {
         if (!res.ok) {
-          setResponse(false);
+          dispatch(user.actions.loggedIn({ loggedIn: false }));
         }
         return res.json();
       })
       .then((json) => {
         handleCredentials(json);
+        dispatch(user.actions.loggedIn({ loggedIn: true }));
         history.push("/checkout");
-        setEmail("");
-        setPassword("");
       })
       .catch((error) => console.error(error))
   };
 
   return (
     <>
+    { !loggedIn &&
         <section>
           <h1>Welcome to monkeybusiness webshop</h1>
           <form onSubmit={handleLogin}>
@@ -67,10 +67,16 @@ const Login = () => {
                 onChange={event => setPassword(event.target.value)} />
             </label>
             <button type="submit">Login</button>
-            {!response && <p>Incorrect credentials, please try again.</p>}
-            <p>Not a member yet? Please sign up <Link to={"/"}>here</Link>.</p>
           </form>
         </section>
+    }
+    { 
+      loggedIn && 
+      <section><p>You are logged in!</p>
+      <p><Link to={"/checkout"}>To Checkout</Link></p>
+      </section>
+    }
+    <p>Not a member yet? Please sign up <Link to={"/"}>here</Link>.</p>
     </>
   );
 };

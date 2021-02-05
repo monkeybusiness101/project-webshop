@@ -26,7 +26,6 @@ export const Form = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [input, setInput] = useState({});
-  const [loggedIn, setLoggedIn] = useState(false)
 
   const handleSignup = () => {
 

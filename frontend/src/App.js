@@ -35,7 +35,7 @@ export const App = () => {
           <Route path="/checkout" exact>
             <Checkout />
           </Route>
-          <Route path="/confirmation/:id" exact>
+          <Route path="/confirmation/:userId/:accessToken" exact>
             <Confirmation />
           </Route>
         </Switch>

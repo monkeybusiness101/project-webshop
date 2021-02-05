@@ -16,7 +16,7 @@ export const webshop = createSlice({
       state.items.snippet = snippet;
     },
     addItem: (state, action) => {
-      const existingProduct = state.items.cart.find((item) => item.id === action.payload.id)
+      const existingProduct = state.items.cart?.find((item) => item.id === action.payload.id)
       if (existingProduct) {
         existingProduct.quantity += 1
       } else {
@@ -24,10 +24,10 @@ export const webshop = createSlice({
       }
     },
     removeItem: (state, action) => {
-      const existingProduct = state.items.cart.find((item) => item.id === action.payload.id)
+      const existingProduct = state.items.cart?.find((item) => item.id === action.payload.id)
 
       if (existingProduct && existingProduct.quantity === 1) {
-        state.items = state.items.cart.filter((item) => item.id !== action.payload.id)
+        state.items = state.items.cart?.filter((item) => item.id !== action.payload.id)
       } else if (existingProduct) {
         existingProduct.quantity -= 1
       }

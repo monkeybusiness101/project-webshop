@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { webshop } from "../reducers/webshop"
 
-
 const initialState = {
   login: {
     userDetails: {},
     accessToken: "",
-    userId: ""
+    userId: "",
+    loggedIn: false
   },
 }
 
@@ -17,6 +17,10 @@ export const user = createSlice({
     setUserDetails: (state, action) => {
       const { userDetails } = action.payload;
       state.login.userDetails = userDetails;
+    },
+    loggedIn: (state, action) => {
+      const { loggedIn } = action.payload;
+      state.login.loggedIn = loggedIn;
     },
     setAccessToken: (state, action) => {
       const { accessToken } = action.payload;
@@ -40,15 +44,15 @@ export const user = createSlice({
 
 })
 
-export const handleSignup = () => {
+export const handleCheckout = () => {
 
   return (dispatch,getState) => {
 
     const data = getState()
     const totalPrice = Math.floor(data.webshop.items?.cart[0]?.unitprice * data.webshop.items?.cart[0]?.quantity)
     const cart = data.webshop.items.cart
-    const id = data.user.login.userId
-    console.log(data.webshop.items.cart)
+    const userId = data.user.login.userId
+    const accessToken = data.user.login.accessToken
 
   fetch('http://localhost:8080/checkout', {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -67,7 +71,7 @@ export const handleSignup = () => {
         "merchanturls": {
           "terms": "https://mentimeter.com",
           "notifications": "https://mentimeter.com",
-          "redirecturl": `http://localhost:3000/confirmation/${id}`
+          "redirecturl": `http://localhost:3000/confirmation/${userId}/${accessToken}`
         },
         "merchantconfig": {
           "maxamount": true,
@@ -145,12 +149,13 @@ export const handleCreateAccount = () => {
     }
 }
 
-export const handleUser = () => {
+export const handleUser = (userId, accessToken) => {
+
   return (dispatch, getState) => {
 
     const data = getState()
-    const accessToken = data.user.login.accessToken
-    const userId = data.user.login.userId
+    let accessToken = data.user.login.accessToken
+    let userId = data.user.login.userId
       
       fetch('http://localhost:8080/profile', {
         method: "GET",
@@ -171,3 +176,25 @@ export const handleUser = () => {
     };
 }
 
+export const handleConfirmation = (userId, accessToken) => {
+
+  return (dispatch) => {
+      
+      fetch('http://localhost:8080/profile', {
+        method: "GET",
+        headers: { Authorization: accessToken, userId: userId },
+      })
+        .then((res) => {
+          if (!res.ok) {
+            // eslint-disable-next-line
+            throw "Failed to retrieve profile";
+          }
+          return res.json();
+        })
+        .then((json) => {
+          dispatch(user.actions.setUserDetails({ userDetails: json }));
+          console.log(json)
+        })
+        .catch((err) => console.error(err))
+    };
+}
