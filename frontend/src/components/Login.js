@@ -4,7 +4,6 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { user } from "../reducers/user";
 
-
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();

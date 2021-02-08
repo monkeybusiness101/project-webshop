@@ -6,7 +6,8 @@ const initialState = {
     userDetails: {},
     accessToken: "",
     userId: "",
-    loggedIn: false
+    loggedIn: false,
+    snippet: { snippet: '' }
   },
 }
 
@@ -14,6 +15,10 @@ export const user = createSlice({
   name: "user",
   initialState,
   reducers: {
+    setSnippet: (state, action) => {
+      const { snippet } = action.payload;
+      state.login.snippet = snippet;
+    },
     setUserDetails: (state, action) => {
       const { userDetails } = action.payload;
       state.login.userDetails = userDetails;
@@ -49,8 +54,8 @@ export const handleCheckout = () => {
   return (dispatch,getState) => {
 
     const data = getState()
-    const totalPrice = Math.floor(data.webshop.items?.cart[0]?.unitprice * data.webshop.items?.cart[0]?.quantity)
-    const cart = data.webshop.items.cart
+    const totalPrice = Math.floor(data.webshop.items[0]?.unitprice * data.webshop.items[0]?.quantity)
+    const cart = data.webshop.items
     const userId = data.user.login.userId
     const accessToken = data.user.login.accessToken
 
@@ -102,7 +107,7 @@ export const handleCheckout = () => {
       return res.json()
     })
     .then((json) => {
-      dispatch(webshop.actions.setSnippet({ snippet: json }))
+      dispatch(user.actions.setSnippet({ snippet: json }))
       console.log(json)
     })
     .catch((error) => console.error(error))
@@ -149,7 +154,7 @@ export const handleCreateAccount = () => {
     }
 }
 
-export const handleUser = (userId, accessToken) => {
+export const handleUser = () => {
 
   return (dispatch, getState) => {
 

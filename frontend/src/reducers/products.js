@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = [
   {
     "producttype": "physical",
-    "reference": "Hej Mats",
-    "name": "Green board 2m",
+    "reference": "Banana",
+    "name": "Bananas",
     "quantity": 1,
     "quantityunit": "pc",
     "unitprice": 1200,

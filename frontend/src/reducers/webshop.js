@@ -1,33 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  items: {
-    cart: [],
-    snippet: {snippet: '' }
-  }
+    items: []
 };
 
 export const webshop = createSlice({
   name: 'webshop',
   initialState,
   reducers: {
-    setSnippet: (state, action) => {
-      const { snippet } = action.payload;
-      state.items.snippet = snippet;
-    },
     addItem: (state, action) => {
-      const existingProduct = state.items.cart?.find((item) => item.id === action.payload.id)
+      const existingProduct = state.items.find((item) => item.reference === action.payload.reference)
       if (existingProduct) {
         existingProduct.quantity += 1
       } else {
-        state.items.cart.push({ ...action.payload, quantity: 1 })
+        state.items.push({ ...action.payload, quantity: 1 })
       }
     },
     removeItem: (state, action) => {
-      const existingProduct = state.items.cart?.find((item) => item.id === action.payload.id)
+      const existingProduct = state.items.find((item) => item.reference === action.payload.reference)
 
       if (existingProduct && existingProduct.quantity === 1) {
-        state.items = state.items.cart?.filter((item) => item.id !== action.payload.id)
+        state.items = state.items.filter((item) => item.reference !== action.payload.reference)
       } else if (existingProduct) {
         existingProduct.quantity -= 1
       }

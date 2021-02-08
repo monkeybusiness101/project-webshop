@@ -10,12 +10,9 @@ import { handleUser } from '../reducers/user'
 export const Checkout = () => {
 
   const dispatch = useDispatch()
-  const checkout = useSelector((store) => store.webshop.items?.snippet?.snippet?.snippet)
-  const cart = useSelector((store) => store.webshop.items?.cart)
+  const checkout = useSelector((store) => store.user.login?.snippet?.snippet?.snippet)
+  const cart = useSelector((store) => store.webshop?.items)
   const user = useSelector((store) => store.user.login?.userDetails.accessToken)
-  
-  console.log(cart)
-  console.log(user)
 
   useEffect(() => {
     dispatch(handleUser())

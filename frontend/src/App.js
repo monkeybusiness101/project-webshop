@@ -8,6 +8,7 @@ import { Form } from './components/Form'
 import { Checkout } from './components/Checkout'
 import Login from './components/Login'
 import { Confirmation } from './components/Confirmation'
+import { Logout } from './components/Logout'
 import { user } from 'reducers/user';
 import { webshop } from 'reducers/webshop';
 import { products } from 'reducers/products';
@@ -39,6 +40,7 @@ export const App = () => {
             <Confirmation />
           </Route>
         </Switch>
+        <Logout />
       </Provider>
     </BrowserRouter>
   )
