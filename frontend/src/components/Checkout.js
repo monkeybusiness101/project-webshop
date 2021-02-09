@@ -13,6 +13,8 @@ export const Checkout = () => {
   const checkout = useSelector((store) => store.user.login?.snippet?.snippet?.snippet)
   const cart = useSelector((store) => store.webshop?.items)
   const user = useSelector((store) => store.user.login?.userDetails.accessToken)
+  const loggedIn = useSelector((store) => store.user.login?.loggedIn)
+
 
   useEffect(() => {
     dispatch(handleUser())
@@ -28,7 +30,7 @@ export const Checkout = () => {
       <Products />
       { cart?.length > 0 && user?.length > 0 && <button type="submit" onClick={handleClick}>Render checkout</button> }
       { checkout && <div>{parse(checkout)}</div> } 
-      <p><Link to={"/login"}>To login</Link></p>
+      { !loggedIn && <p><Link to={"/login"}>To login</Link></p> }
     </div>
   )
 }

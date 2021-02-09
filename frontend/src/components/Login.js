@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector, batch } from "react-redux";
 import { Link, useHistory } from 'react-router-dom';
 
 import { user } from "../reducers/user";
+import { handleUser } from '../reducers/user'
 
-const Login = () => {
+export const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -13,13 +14,18 @@ const Login = () => {
 
   const loggedIn = useSelector((store) => store.user.login?.loggedIn)
 
+  useEffect(() => {
+    dispatch(handleUser())
+  }, [])
 
   const handleCredentials = (credentials) => {
-    localStorage.setItem("sessionToken", credentials.accessToken);
-    localStorage.setItem("sessionId", credentials.userId);
-    dispatch(user.actions.setAccessToken({ accessToken: credentials.accessToken }));
-    dispatch(user.actions.setUserId({ userId: credentials.userId }));
 
+    batch(() => {
+      localStorage.setItem("sessionToken", credentials.accessToken);
+      localStorage.setItem("sessionId", credentials.userId);
+      dispatch(user.actions.setAccessToken({ accessToken: credentials.accessToken }));
+      dispatch(user.actions.setUserId({ userId: credentials.userId }));
+    })
   };
 
   const handleLogin = (event) => {
@@ -67,6 +73,7 @@ const Login = () => {
             </label>
             <button type="submit">Login</button>
           </form>
+          <p>Not a member yet? Please sign up <Link to={"/"}>here</Link>.</p>
         </section>
     }
     { 
@@ -75,9 +82,6 @@ const Login = () => {
       <p><Link to={"/checkout"}>To Checkout</Link></p>
       </section>
     }
-    <p>Not a member yet? Please sign up <Link to={"/"}>here</Link>.</p>
     </>
   );
 };
-
-export default Login;

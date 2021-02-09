@@ -6,7 +6,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { Form } from './components/Form'
 import { Checkout } from './components/Checkout'
-import Login from './components/Login'
+import { Login } from './components/Login'
 import { Confirmation } from './components/Confirmation'
 import { Logout } from './components/Logout'
 import { user } from 'reducers/user';

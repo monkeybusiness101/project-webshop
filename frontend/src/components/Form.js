@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useHistory, Link } from 'react-router-dom';
-import { useDispatch, batch } from "react-redux";
+import { useDispatch, batch, useSelector } from "react-redux";
 
 import { user } from "../reducers/user";
 import { handleCreateAccount } from '../reducers/user'
+import { handleUser } from '../reducers/user'
 
 const InputContainer = styled.form`
   display: flex;
@@ -26,6 +26,11 @@ export const Form = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [input, setInput] = useState({});
+  const loggedIn = useSelector((store) => store.user.login?.loggedIn)
+
+  useEffect(() => {
+    dispatch(handleUser())
+  }, [])
 
   const handleSignup = () => {
 
@@ -38,7 +43,7 @@ export const Form = () => {
 
   return (
     <div>
-    <section>
+   { !loggedIn && <section>
       <InputContainer onSubmit={handleSignup}>
         <p>Please sign up below.</p>
         <InputLabel>
@@ -123,8 +128,16 @@ export const Form = () => {
         </InputLabel>
         <button type="submit">Create account</button>
       </InputContainer>
+      <p>Already a member? Please login <Link to={"/login"}>here</Link>.</p>
     </section>
-    <p>Already a member? Please login <Link to={"/login"}>here</Link>.</p>
+   }
+    { 
+      loggedIn && 
+      <section><p>You are logged in!</p>
+      <p><Link to={"/checkout"}>To Checkout</Link></p>
+      </section>
+    }
+    
     </div>
   );
 }

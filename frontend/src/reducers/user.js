@@ -35,10 +35,6 @@ export const user = createSlice({
       const { userId } = action.payload;
       state.login.userId = userId;
     },
-    setAlias: (state, action) => {
-      const { alias } = action.payload;
-      state.login.alias = alias;
-    },
     deleteAccessToken: (state, action) => {
       state.login.accessToken = "";
     },
@@ -157,10 +153,12 @@ export const handleCreateAccount = () => {
 export const handleUser = () => {
 
   return (dispatch, getState) => {
-
+    dispatch(user.actions.setAccessToken({ accessToken: localStorage.getItem("sessionToken") }))
+    dispatch(user.actions.setUserId({ userId: localStorage.getItem("sessionId") }))
     const data = getState()
     let accessToken = data.user.login.accessToken
     let userId = data.user.login.userId
+    
       
       fetch('http://localhost:8080/profile', {
         method: "GET",
@@ -169,13 +167,14 @@ export const handleUser = () => {
         .then((res) => {
           if (!res.ok) {
             // eslint-disable-next-line
+            dispatch(user.actions.loggedIn({ loggedIn: false }));
             throw "Failed to retrieve profile";
           }
           return res.json();
         })
         .then((json) => {
           dispatch(user.actions.setUserDetails({ userDetails: json }));
-          console.log(json)
+          dispatch(user.actions.loggedIn({ loggedIn: true }));
         })
         .catch((err) => console.error(err))
     };
@@ -192,12 +191,14 @@ export const handleConfirmation = (userId, accessToken) => {
         .then((res) => {
           if (!res.ok) {
             // eslint-disable-next-line
+            dispatch(user.actions.loggedIn({ loggedIn: false }));
             throw "Failed to retrieve profile";
           }
           return res.json();
         })
         .then((json) => {
           dispatch(user.actions.setUserDetails({ userDetails: json }));
+          dispatch(user.actions.loggedIn({ loggedIn: true }));
           console.log(json)
         })
         .catch((err) => console.error(err))
