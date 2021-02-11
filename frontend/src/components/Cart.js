@@ -1,25 +1,41 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import styled from 'styled-components'
+
 import { CartItem } from './CartItem'
 
+const StyledDiv = styled.div`
+@media (min-width: 700px) {
+  display: flex;
+  height: 120px;
+  width: 700px;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+}
+`
+
+const StyledUl = styled.ul`
+ width: 100%;
+`
+
 export const Cart = () => {
-  // TODO - fetch products from the cart store
   const products = useSelector((store) => store.webshop.items)
   const totalPrice = useSelector((store) => (
     store.webshop.items.reduce((total, item) => (total + (item.unitprice * item.quantity)), 0)
   ))
   return (
-    <div className="cart">
-      <div className="total">
-        <span className="emoji" role="img" aria-label="cart">🛒</span>
-        <div className="amount">Total: {totalPrice}:-</div>
+    <StyledDiv>
+      <div>
+        <span role="img" aria-label="cart">🛒</span>
+        <div>Total: {totalPrice}:-</div>
       </div>
-      
-      <ul className="items">
+
+      <StyledUl>
         {products?.map((product, index) => (
           <CartItem key={index} product={product} />
         ))}
-      </ul>
-    </div>
+      </StyledUl>
+    </StyledDiv>
   )
 }

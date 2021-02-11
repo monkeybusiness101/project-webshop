@@ -25,6 +25,19 @@ const StyledButton = styled(Button)`
     background-color: #5469d4;
   }
 `
+const StyledDiv = styled.div`
+  @media (min-width: 700px) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+`
+const StyledSection = styled.section`
+  @media (min-width: 700px) {
+    width: 500px;
+  }
+`
+
 export const Form = () => {
   
   const dispatch = useDispatch()
@@ -47,12 +60,14 @@ export const Form = () => {
   }
 
   return (
-    <div>
-   { !loggedIn && <section>
+    <StyledDiv>
+   { !loggedIn && <StyledSection>
       <form onSubmit={handleSignup}>
         <InputLabel>
           Organization number:
-          <StyledTextField 
+          <StyledTextField
+            required
+            minLength="5"
             type="orgno"
             value={input.orgNo}
             name="orgno"
@@ -61,6 +76,8 @@ export const Form = () => {
         <InputLabel>
           Company name:
           <StyledTextField
+            required
+            minLength="2"
             type="compname"
             value={input.companyName}
             name="compname"
@@ -69,6 +86,8 @@ export const Form = () => {
         <InputLabel>
           First Name:
           <StyledTextField
+            required
+            minLength="2"
             type="firstname"
             value={input.firstName}
             name="firstname"
@@ -76,7 +95,9 @@ export const Form = () => {
         </InputLabel>
         <InputLabel>
           Last Name:
-          <StyledTextField    
+          <StyledTextField  
+            required
+            minLength="2"  
             type="lastname"
             value={input.lastName}
             name="lastname"
@@ -85,6 +106,8 @@ export const Form = () => {
         <InputLabel>
           Street address:
           <StyledTextField
+            required
+            minLength="5"
             type="streetaddr"
             value={input.streetAddress}
             name="streetaddr"
@@ -93,6 +116,8 @@ export const Form = () => {
         <InputLabel>
           zip:
           <StyledTextField
+            required
+            minLength="4"
             type="zipcode"
             value={input.zipCode}
             name="zipcode"
@@ -101,6 +126,8 @@ export const Form = () => {
         <InputLabel>
           city:
           <StyledTextField
+            required
+            minLength="2"
             type="city"
             value={input.city}
             name="city"
@@ -109,6 +136,8 @@ export const Form = () => {
         <InputLabel>
           cellno:
           <StyledTextField
+            required
+            minLength="5"
             type="cellno"
             value={input.cellNo}
             name="cellno"
@@ -117,6 +146,8 @@ export const Form = () => {
         <InputLabel>
           Email:
           <StyledTextField
+            required
+            minLength="5"
             type="email"
             value={input.email}
             name="email"
@@ -125,6 +156,8 @@ export const Form = () => {
         <InputLabel>
           Password:
           <StyledTextField
+            required
+            minLength="5"
             type="password"
             value={input.password}
             name="password"
@@ -132,8 +165,8 @@ export const Form = () => {
         </InputLabel>
         <StyledButton type="submit">Create account</StyledButton>
       </form>
-      <StyledButton onClick={() => {history.push("/login")}}>Login</StyledButton>
-    </section>
+      <StyledButton onClick={() => {history.push("/login")}}>Have account? Login</StyledButton>
+    </StyledSection>
    }
     { 
       loggedIn && 
@@ -141,7 +174,6 @@ export const Form = () => {
       <StyledButton onClick={() => {history.push("/checkout")}}>Checkout</StyledButton>
       </section>
     }
-    
-    </div>
+    </StyledDiv>
   )
 }

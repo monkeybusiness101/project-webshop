@@ -24,6 +24,18 @@ const StyledButton = styled(Button)`
     background-color: #5469d4;
   }
 `
+const StyledDiv = styled.div`
+  @media (min-width: 700px) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+`
+const StyledSection = styled.section`
+  @media (min-width: 700px) {
+    width: 500px;
+  }
+`
 
 export const Login = () => {
   const dispatch = useDispatch()
@@ -45,13 +57,15 @@ export const Login = () => {
   }
 
   return (
-    <>
+    <StyledDiv>
     { !loggedIn &&
-        <section>
+        <StyledSection>
           <form onSubmit={handleClick}>
             <InputLabel>
               Email:
               <StyledTextField
+                required
+                minLength="5"
                 type="email"
                 value={email}
                 name="email"
@@ -60,20 +74,22 @@ export const Login = () => {
             <InputLabel>
               Password:
               <StyledTextField
+                required
+                minLength="5"
                 type="password"
                 value={password}
                 onChange={event => setPassword(event.target.value)} />
             </InputLabel>
             <StyledButton type="submit">Login</StyledButton>
           </form>
-          <StyledButton onClick={() => {history.push("/")}}>Signup</StyledButton>
-        </section>
+          <StyledButton onClick={() => {history.push("/")}}>No account? Signup</StyledButton>
+        </StyledSection>
     }
     { loggedIn && 
       <section><p>You are logged in!</p>
       <StyledButton onClick={() => {history.push("/checkout")}}>Checkout</StyledButton>
       </section>
     }
-    </>
+    </StyledDiv>
   )
 }

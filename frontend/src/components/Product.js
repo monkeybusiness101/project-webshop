@@ -13,14 +13,29 @@ const StyledButton = styled(Button)`
   &:hover {
     background-color: #5469d4;
   }
+  @media (min-width: 700px) {
+    justify-content: center;
+    flex-direction: horizontal;
+}
+`
+
+const ProductContainer = styled.article`
+
+  @media (min-width: 700px) {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 700px;
+    height: 100%;
+  }
 `
 
 export const Product = ({ product }) => {
   const dispatch = useDispatch()
 
   return (
-    <article className="product">
-      <span className="emoji" role="img" aria-label={product.reference}>🍌</span>
+    <ProductContainer>
+      <span role="img" aria-label={product.reference}>🍌</span>
       <p>{product.unitprice}:-</p>
 
       <StyledButton
@@ -29,6 +44,6 @@ export const Product = ({ product }) => {
         onClick={() => dispatch(webshop.actions.addItem(product))}>
         Add to cart
       </StyledButton>
-    </article>
+    </ProductContainer>
   )
 }

@@ -16,9 +16,25 @@ const StyledButton = styled(Button)`
   width: 100%;
   height: 50px;
   &:hover {
-    background-color: #5469d4;
+  background-color: #5469d4;
   }
 `
+const Wrapper = styled.div`
+  width: 700px;
+`
+const CheckoutContainer = styled.div`
+  @media (min-width: 700px) {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+  }
+`
+const SmallerContainer = styled.div`
+  @media (min-width: 700px) {
+    width: 700px;
+  }
+  `
 
 export const Checkout = () => {
 
@@ -39,12 +55,14 @@ export const Checkout = () => {
   }
 
   return (
-    <div>
-      <Cart />
-      <Products />
-      { cart?.length > 0 && user?.length > 0 && <StyledButton type="submit" onClick={handleClick}>Render checkout</StyledButton> }
-      { checkout && <div>{parse(checkout)}</div> } 
-      { !loggedIn && <StyledButton onClick={() => {history.push("/login")}}>Login</StyledButton> }
-    </div>
+    <CheckoutContainer>
+      <SmallerContainer>
+        <Cart />
+        <Products />
+        { cart?.length > 0 && user?.length > 0 && <StyledButton type="submit" onClick={handleClick}>Render checkout</StyledButton> }
+        { checkout && <Wrapper>{parse(checkout)}</Wrapper> } 
+        { !loggedIn && <StyledButton onClick={() => {history.push("/login")}}>Login</StyledButton> }
+      </SmallerContainer>
+    </CheckoutContainer>
   )
 }
