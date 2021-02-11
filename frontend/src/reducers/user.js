@@ -41,6 +41,7 @@ export const user = createSlice({
       state.login.userId = ""
     },
   }
+
 })
 
 export const handleCheckout = () => {
@@ -53,7 +54,7 @@ export const handleCheckout = () => {
     const userId = data.user.login.userId
     const accessToken = data.user.login.accessToken
 
-  fetch('https://monkeybiz-webshop.herokuapp.com/', {
+  fetch('https://monkeybiz-webshop.herokuapp.com/checkout', {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     headers: {
       'Content-Type': 'application/json'
