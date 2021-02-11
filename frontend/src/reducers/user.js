@@ -71,7 +71,7 @@ export const handleCheckout = () => {
         "merchanturls": {
           "terms": "https://mentimeter.com",
           "notifications": "https://mentimeter.com",
-          "redirecturl": `http://localhost:3000/confirmation/${userId}/${accessToken}`
+          "redirecturl": `https://monkeybiz-webshop.herokuapp.com/confirmation/${userId}/${accessToken}`
         },
         "merchantconfig": {
           "maxamount": true,
