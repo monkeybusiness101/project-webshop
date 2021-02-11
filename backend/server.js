@@ -9,7 +9,7 @@ import bcrypt from "bcrypt"
 
 dotenv.config()
 
-const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/projectWebshop"
+const mongoUrl = process.env.MONGO_URL
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.Promise = Promise
 
