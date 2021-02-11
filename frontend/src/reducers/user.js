@@ -41,7 +41,6 @@ export const user = createSlice({
       state.login.userId = ""
     },
   }
-
 })
 
 export const handleCheckout = () => {
@@ -54,7 +53,7 @@ export const handleCheckout = () => {
     const userId = data.user.login.userId
     const accessToken = data.user.login.accessToken
 
-  fetch('http://localhost:8080/checkout', {
+  fetch('https://monkeybiz-webshop.herokuapp.com/', {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     headers: {
       'Content-Type': 'application/json'
@@ -115,7 +114,7 @@ export const handleCreateAccount = () => {
 
     const data = getState()
       
-      fetch('http://localhost:8080/users', {
+      fetch('https://monkeybiz-webshop.herokuapp.com/users', {
         method: "POST",
         body: JSON.stringify({ 
           email:`${data.user.login.userDetails.email}`, 
@@ -156,7 +155,7 @@ export const handleUser = () => {
     let accessToken = data.user.login.accessToken
     let userId = data.user.login.userId
     
-      fetch('http://localhost:8080/profile', {
+      fetch('https://monkeybiz-webshop.herokuapp.com/profile', {
         method: "GET",
         headers: { Authorization: accessToken, userId: userId },
       })
@@ -180,7 +179,7 @@ export const handleConfirmation = (userId, accessToken) => {
 
   return (dispatch) => {
       
-      fetch('http://localhost:8080/profile', {
+      fetch('https://monkeybiz-webshop.herokuapp.com/profile', {
         method: "GET",
         headers: { Authorization: accessToken, userId: userId },
       })
@@ -216,7 +215,7 @@ export const handleLogin = (email, password) => {
 
   return (dispatch) => {
 
-    fetch('http://localhost:8080/sessions', {
+    fetch('https://monkeybiz-webshop.herokuapp.com/sessions', {
     method: "POST",
     body: JSON.stringify({ email, password }),
     headers: { "Content-Type": "application/json" },
