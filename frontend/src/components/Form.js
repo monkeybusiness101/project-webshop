@@ -1,54 +1,58 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useHistory, Link } from 'react-router-dom';
-import { useDispatch, batch, useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom'
+import { useDispatch, batch, useSelector } from "react-redux"
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
 
 import { user } from "../reducers/user";
 import { handleCreateAccount } from '../reducers/user'
 import { handleUser } from '../reducers/user'
 
-const InputContainer = styled.form`
-  display: flex;
+const StyledTextField = styled(TextField)`
   width: 100%;
-  height: 100%;
-  flex-direction: column;
-  list-style-type:none;
-  margin-bottom: 10px;
 `
-
 const InputLabel = styled.label`
   display: flex;
   flex-direction: column;
 `
-
+const StyledButton = styled(Button)`
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 7px 14px;
+  width: 100%;
+  height: 50px;
+  &:hover {
+    background-color: #5469d4;
+  }
+`
 export const Form = () => {
   
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const [input, setInput] = useState({});
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const [input, setInput] = useState({})
   const loggedIn = useSelector((store) => store.user.login?.loggedIn)
 
   useEffect(() => {
     dispatch(handleUser())
+    // eslint-disable-next-line
   }, [])
 
-  const handleSignup = () => {
-
+  const handleSignup = (event) => {
+    event.preventDefault()
     batch(() => {
       dispatch(user.actions.setUserDetails({ userDetails: input }))
       dispatch(handleCreateAccount())
       history.push("/checkout")
     })
-  };
+  }
 
   return (
     <div>
    { !loggedIn && <section>
-      <InputContainer onSubmit={handleSignup}>
-        <p>Please sign up below.</p>
+      <form onSubmit={handleSignup}>
         <InputLabel>
           Organization number:
-          <input 
+          <StyledTextField 
             type="orgno"
             value={input.orgNo}
             name="orgno"
@@ -56,7 +60,7 @@ export const Form = () => {
         </InputLabel>
         <InputLabel>
           Company name:
-          <input
+          <StyledTextField
             type="compname"
             value={input.companyName}
             name="compname"
@@ -64,7 +68,7 @@ export const Form = () => {
         </InputLabel>
         <InputLabel>
           First Name:
-          <input
+          <StyledTextField
             type="firstname"
             value={input.firstName}
             name="firstname"
@@ -72,7 +76,7 @@ export const Form = () => {
         </InputLabel>
         <InputLabel>
           Last Name:
-          <input    
+          <StyledTextField    
             type="lastname"
             value={input.lastName}
             name="lastname"
@@ -80,7 +84,7 @@ export const Form = () => {
         </InputLabel>
         <InputLabel>
           Street address:
-          <input
+          <StyledTextField
             type="streetaddr"
             value={input.streetAddress}
             name="streetaddr"
@@ -88,7 +92,7 @@ export const Form = () => {
         </InputLabel>
         <InputLabel>
           zip:
-          <input
+          <StyledTextField
             type="zipcode"
             value={input.zipCode}
             name="zipcode"
@@ -96,7 +100,7 @@ export const Form = () => {
         </InputLabel>
         <InputLabel>
           city:
-          <input
+          <StyledTextField
             type="city"
             value={input.city}
             name="city"
@@ -104,7 +108,7 @@ export const Form = () => {
         </InputLabel>
         <InputLabel>
           cellno:
-          <input
+          <StyledTextField
             type="cellno"
             value={input.cellNo}
             name="cellno"
@@ -112,7 +116,7 @@ export const Form = () => {
         </InputLabel>
         <InputLabel>
           Email:
-          <input
+          <StyledTextField
             type="email"
             value={input.email}
             name="email"
@@ -120,24 +124,24 @@ export const Form = () => {
         </InputLabel>
         <InputLabel>
           Password:
-          <input
+          <StyledTextField
             type="password"
             value={input.password}
             name="password"
             onChange={({target}) => setInput(state => ({...state,password:target.value}))} />
         </InputLabel>
-        <button type="submit">Create account</button>
-      </InputContainer>
-      <p>Already a member? Please login <Link to={"/login"}>here</Link>.</p>
+        <StyledButton type="submit">Create account</StyledButton>
+      </form>
+      <StyledButton onClick={() => {history.push("/login")}}>Login</StyledButton>
     </section>
    }
     { 
       loggedIn && 
       <section><p>You are logged in!</p>
-      <p><Link to={"/checkout"}>To Checkout</Link></p>
+      <StyledButton onClick={() => {history.push("/checkout")}}>Checkout</StyledButton>
       </section>
     }
     
     </div>
-  );
+  )
 }

@@ -5,10 +5,10 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { Form } from './components/Form'
+import { Header } from './components/Header'
 import { Checkout } from './components/Checkout'
 import { Login } from './components/Login'
 import { Confirmation } from './components/Confirmation'
-import { Logout } from './components/Logout'
 import { user } from 'reducers/user';
 import { webshop } from 'reducers/webshop';
 import { products } from 'reducers/products';
@@ -26,6 +26,7 @@ export const App = () => {
   return (
     <BrowserRouter>
       <Provider store={store}>
+        <Header />
         <Switch>
           <Route path="/" exact>
             <Form />
@@ -40,7 +41,6 @@ export const App = () => {
             <Confirmation />
           </Route>
         </Switch>
-        <Logout />
       </Provider>
     </BrowserRouter>
   )

@@ -2,7 +2,19 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 
 import { webshop } from 'reducers/webshop'
+import styled from 'styled-components'
 
+import Button from '@material-ui/core/Button'
+
+const StyledButton = styled(Button)`
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 7px 14px;
+  width: 100%;
+  height: 50px;
+  &:hover {
+    background-color: #5469d4;
+  }
+`
 
 export const CartItem = ({ product }) => {
   const dispatch = useDispatch()
@@ -16,8 +28,8 @@ export const CartItem = ({ product }) => {
       </div>
 
       <span className="actions">
-        <button type="button" onClick={() => { dispatch(webshop.actions.removeItem(product)) }}>-</button>
-        <button type="button" onClick={() => { dispatch(webshop.actions.addItem(product)) }}>+</button>
+        <StyledButton type="button" onClick={() => { dispatch(webshop.actions.removeItem(product)) }}>-</StyledButton>
+        <StyledButton type="button" onClick={() => { dispatch(webshop.actions.addItem(product)) }}>+</StyledButton>
       </span>
     </li>
   )

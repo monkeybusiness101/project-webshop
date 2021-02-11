@@ -14,7 +14,7 @@ export const Cart = () => {
         <span className="emoji" role="img" aria-label="cart">🛒</span>
         <div className="amount">Total: {totalPrice}:-</div>
       </div>
-
+      
       <ul className="items">
         {products?.map((product, index) => (
           <CartItem key={index} product={product} />

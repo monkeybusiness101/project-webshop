@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { webshop } from "../reducers/webshop"
 
 const initialState = {
   login: {
@@ -16,27 +15,27 @@ export const user = createSlice({
   initialState,
   reducers: {
     setSnippet: (state, action) => {
-      const { snippet } = action.payload;
-      state.login.snippet = snippet;
+      const { snippet } = action.payload
+      state.login.snippet = snippet
     },
     setUserDetails: (state, action) => {
-      const { userDetails } = action.payload;
-      state.login.userDetails = userDetails;
+      const { userDetails } = action.payload
+      state.login.userDetails = userDetails
     },
     loggedIn: (state, action) => {
-      const { loggedIn } = action.payload;
-      state.login.loggedIn = loggedIn;
+      const { loggedIn } = action.payload
+      state.login.loggedIn = loggedIn
     },
     setAccessToken: (state, action) => {
-      const { accessToken } = action.payload;
-      state.login.accessToken = accessToken;
+      const { accessToken } = action.payload
+      state.login.accessToken = accessToken
     },
     setUserId: (state, action) => {
-      const { userId } = action.payload;
-      state.login.userId = userId;
+      const { userId } = action.payload
+      state.login.userId = userId
     },
     deleteAccessToken: (state, action) => {
-      state.login.accessToken = "";
+      state.login.accessToken = ""
     },
     deleteUserId: (state, action) => {
       state.login.userId = ""
@@ -64,7 +63,7 @@ export const handleCheckout = () => {
     body: JSON.stringify(
       {
         "currency": "SEK",
-        "locale": "sv-se",
+        "locale": "en-gb",
         "country": "SE",
         "amount": totalPrice,
         "cart": cart
@@ -98,13 +97,13 @@ export const handleCheckout = () => {
   })
     .then((res) => {
       if (!res.ok) {
+        // eslint-disable-next-line
         throw "Fetch checkout failed"
       }
       return res.json()
     })
     .then((json) => {
       dispatch(user.actions.setSnippet({ snippet: json }))
-      console.log(json)
     })
     .catch((error) => console.error(error))
 
@@ -135,15 +134,13 @@ export const handleCreateAccount = () => {
         .then((res) => {
           if (!res.ok) {
             // eslint-disable-next-line
-            throw "Signup failed";
+            throw "Signup failed"
           }
-          return res.json();
+          return res.json()
         })
         .then((json) => {
-
-          console.log(json)
-          dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }));
-          dispatch(user.actions.setUserId({ userId: json.userId }));
+          dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }))
+          dispatch(user.actions.setUserId({ userId: json.userId }))
         })
         .catch((error) => console.error(error))
       
@@ -159,25 +156,24 @@ export const handleUser = () => {
     let accessToken = data.user.login.accessToken
     let userId = data.user.login.userId
     
-      
       fetch('http://localhost:8080/profile', {
         method: "GET",
         headers: { Authorization: accessToken, userId: userId },
       })
         .then((res) => {
           if (!res.ok) {
+            dispatch(user.actions.loggedIn({ loggedIn: false }))
             // eslint-disable-next-line
-            dispatch(user.actions.loggedIn({ loggedIn: false }));
-            throw "Failed to retrieve profile";
+            throw "Failed to retrieve profile"
           }
           return res.json();
         })
         .then((json) => {
-          dispatch(user.actions.setUserDetails({ userDetails: json }));
-          dispatch(user.actions.loggedIn({ loggedIn: true }));
+          dispatch(user.actions.setUserDetails({ userDetails: json }))
+          dispatch(user.actions.loggedIn({ loggedIn: true }))
         })
         .catch((err) => console.error(err))
-    };
+    }
 }
 
 export const handleConfirmation = (userId, accessToken) => {
@@ -190,17 +186,54 @@ export const handleConfirmation = (userId, accessToken) => {
       })
         .then((res) => {
           if (!res.ok) {
+            dispatch(user.actions.loggedIn({ loggedIn: false }))
             // eslint-disable-next-line
-            dispatch(user.actions.loggedIn({ loggedIn: false }));
-            throw "Failed to retrieve profile";
+            throw "Failed to retrieve profile"
           }
-          return res.json();
+          return res.json()
         })
         .then((json) => {
-          dispatch(user.actions.setUserDetails({ userDetails: json }));
-          dispatch(user.actions.loggedIn({ loggedIn: true }));
-          console.log(json)
+          dispatch(user.actions.setUserDetails({ userDetails: json }))
+          dispatch(user.actions.loggedIn({ loggedIn: true }))
         })
         .catch((err) => console.error(err))
-    };
+    }
+}
+
+export const handleCredentials = (credentials) => {
+
+  console.log(credentials)
+
+  return (dispatch) => {
+      localStorage.setItem("sessionToken", credentials.accessToken)
+      localStorage.setItem("sessionId", credentials.userId)
+      dispatch(user.actions.setAccessToken({ accessToken: credentials.accessToken }))
+      dispatch(user.actions.setUserId({ userId: credentials.userId }))
+  }
+}
+
+export const handleLogin = (email, password) => {
+
+  return (dispatch) => {
+
+    fetch('http://localhost:8080/sessions', {
+    method: "POST",
+    body: JSON.stringify({ email, password }),
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((res) => {
+      if (!res.ok) {
+        dispatch(user.actions.loggedIn({ loggedIn: false }))
+      }
+      return res.json()
+    })
+    .then((json) => {
+      localStorage.setItem("sessionToken", json.accessToken)
+      localStorage.setItem("sessionId", json.userId)
+      dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }))
+      dispatch(user.actions.setUserId({ userId: json.userId }))
+      dispatch(user.actions.loggedIn({ loggedIn: true }))
+    })
+    .catch((error) => console.error(error))
+  }
 }
