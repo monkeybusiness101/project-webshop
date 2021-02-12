@@ -24,6 +24,8 @@ const StyledDiv = styled.div`
 const StyledQuantitySpan = styled.span`
   height: 20px;
   margin-right: 10px;
+  display: flex;
+  flex-direction: horizontal;
 `
 
 const StyledSumSpan = styled.span`

@@ -18,9 +18,14 @@ const StyledButton = styled(Button)`
   &:hover {
   background-color: #5469d4;
   }
+  @media (min-width: 700px) {
+    width: 80%;
+  }
 `
 const Wrapper = styled.div`
-  width: 700px;
+  @media (min-width: 700px) {
+    width: 700px;
+  }
 `
 const CheckoutContainer = styled.div`
   @media (min-width: 700px) {
@@ -33,6 +38,10 @@ const CheckoutContainer = styled.div`
 const SmallerContainer = styled.div`
   @media (min-width: 700px) {
     width: 700px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
   }
   `
 

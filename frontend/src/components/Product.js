@@ -14,30 +14,41 @@ const StyledButton = styled(Button)`
     background-color: #5469d4;
   }
   @media (min-width: 700px) {
-    justify-content: center;
-    flex-direction: horizontal;
+    width: 80%;
 }
 `
-
 const ProductContainer = styled.article`
 
   @media (min-width: 700px) {
     display: flex;
-    justify-content: center;
     flex-direction: column;
+    justify-content: center;
+    align-content: center;
     width: 700px;
     height: 100%;
+    margin-top: 20px;
+    margin-bottom: 50px;
   }
 `
+const SmallerContainer = styled.article`
 
+  @media (min-width: 700px) {
+    width: 700px;
+    height: 100px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+`
 export const Product = ({ product }) => {
   const dispatch = useDispatch()
 
   return (
     <ProductContainer>
-      <span role="img" aria-label={product.reference}>🍌</span>
-      <p>{product.unitprice}:-</p>
-
+      <SmallerContainer>
+        <span role="img" aria-label={product.reference}>🍌</span>
+        <p>{product.unitprice}:-</p>
+      </SmallerContainer>
       <StyledButton
         type="button"
         disabled={product.inventory === 0}
