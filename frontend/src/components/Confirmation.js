@@ -17,6 +17,7 @@ const StyledButton = styled(Button)`
 const StyledContainer = styled.div`
   @media (min-width: 700px) {
     width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
   }
