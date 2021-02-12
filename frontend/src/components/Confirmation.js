@@ -26,6 +26,7 @@ const StyledDiv = styled.div`
     width: 80%;
     display: flex;
     justify-content: center;
+    flex-direction: column;
   }
 `
 
