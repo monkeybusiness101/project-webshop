@@ -14,6 +14,20 @@ const StyledButton = styled(Button)`
     background-color: #5469d4;
   }
 `
+const StyledContainer = styled.div`
+  @media (min-width: 700px) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+`
+const StyledDiv = styled.div`
+  @media (min-width: 700px) {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+  }
+`
 
 export const Confirmation = () => {
 
@@ -28,14 +42,17 @@ export const Confirmation = () => {
   }, [])
 
   return (
-    <>
-    <p>Thank you for making a purchase!</p>
-    <p>We will send the order to:</p>
-    <p>First name: { cart.firstName }</p>
-    <p>Surname: { cart.lastName }</p>
-    <p>Company: { cart.companyName }</p>
-    <p>Address: { cart.streetAddress }</p>
-    <StyledButton onClick={() => {history.push("/checkout")}}>Checkout</StyledButton>
-    </>
+    <StyledContainer>
+      <StyledDiv>
+        <p>Thank you for making a purchase!</p>
+        <p>We will send the order to:</p>
+        <p>First name: { cart.firstName }</p>
+        <p>Surname: { cart.lastName }</p>
+        <p>Company: { cart.companyName }</p>
+        <p>Address: { cart.streetAddress }</p>
+        <StyledButton onClick={() => {history.push("/checkout")}}>Checkout</StyledButton>
+      </StyledDiv>
+    </StyledContainer>
+    
   )
 }
