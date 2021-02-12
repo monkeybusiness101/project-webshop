@@ -33,15 +33,18 @@ const User = mongoose.model("User", {
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    minlength: 5
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    minlength: 5
   },
   orgnr: {
     type: String,
-    required: true
+    required: true,
+    minlength: 5
   },
   companyname: {
     type: String,
@@ -57,19 +60,23 @@ const User = mongoose.model("User", {
   },
   streetaddress: {
     type: String,
-    required: true
+    required: true,
+    minlength: 5
   },
   zip: {
     type: String,
-    required: true
+    required: true,
+    minlength: 4
   },
   city: {
     type: String,
-    required: true
+    required: true,
+    minlength: 2
   },
   cellno: {
     type: String,
-    required: true
+    required: true,
+    minlength: 5
   },
   accessToken: {
     type: String,
