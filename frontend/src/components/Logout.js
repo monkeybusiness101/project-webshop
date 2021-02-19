@@ -13,6 +13,8 @@ const StyledButton = styled(Button)`
     background-color: #5469d4;
   }
 `
+
+// Logout component
 export const Logout = () => {
   const dispatch = useDispatch();
   const token = useSelector((store) => store.user.login?.accessToken)

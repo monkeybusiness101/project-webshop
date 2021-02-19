@@ -18,7 +18,6 @@ const StyledButton = styled(Button)`
 }
 `
 const ProductContainer = styled.article`
-
   @media (min-width: 700px) {
     display: flex;
     flex-direction: column;
@@ -31,7 +30,6 @@ const ProductContainer = styled.article`
   }
 `
 const SmallerContainer = styled.article`
-
   @media (min-width: 700px) {
     width: 700px;
     height: 100px;
@@ -40,6 +38,7 @@ const SmallerContainer = styled.article`
     flex-direction: column;
   }
 `
+//Component to display available products
 export const Product = ({ product }) => {
   const dispatch = useDispatch()
 

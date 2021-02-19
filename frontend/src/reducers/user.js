@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+// Main reducer for the webshop. Keeps track of userdetails and checkout snippet. Keeps track and sets accesstoken and userid.
 const initialState = {
   login: {
     userDetails: {},
@@ -44,10 +45,10 @@ export const user = createSlice({
 
 })
 
+// Create checkout with briqpay api
 export const handleCheckout = () => {
 
   return (dispatch,getState) => {
-
     const data = getState()
     const totalPrice = Math.floor(data.webshop.items[0]?.unitprice * data.webshop.items[0]?.quantity)
     const cart = data.webshop.items
@@ -110,6 +111,7 @@ export const handleCheckout = () => {
  }
 }
 
+// Create account with backend and mongodb
 export const handleCreateAccount = () => {
   return (dispatch, getState) => {
 
@@ -147,6 +149,7 @@ export const handleCreateAccount = () => {
     }
 }
 
+// Check if user exist and manage logged in state
 export const handleUser = () => {
 
   return (dispatch, getState) => {
@@ -176,6 +179,7 @@ export const handleUser = () => {
     }
 }
 
+// Provide details after finalized purchase
 export const handleConfirmation = (userId, accessToken) => {
 
   return (dispatch) => {
@@ -200,9 +204,8 @@ export const handleConfirmation = (userId, accessToken) => {
     }
 }
 
+// Handle login and setting persistent session token
 export const handleCredentials = (credentials) => {
-
-  console.log(credentials)
 
   return (dispatch) => {
       localStorage.setItem("sessionToken", credentials.accessToken)
@@ -212,6 +215,7 @@ export const handleCredentials = (credentials) => {
   }
 }
 
+// Handle login
 export const handleLogin = (email, password) => {
 
   return (dispatch) => {

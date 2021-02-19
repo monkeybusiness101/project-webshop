@@ -36,7 +36,7 @@ const StyledSection = styled.section`
     width: 500px;
   }
 `
-
+// Login component
 export const Login = () => {
   const dispatch = useDispatch()
   const history = useHistory()
@@ -58,38 +58,38 @@ export const Login = () => {
 
   return (
     <StyledDiv>
-    { !loggedIn &&
-        <StyledSection>
-          <form onSubmit={handleClick}>
-            <InputLabel>
-              Email:
-              <StyledTextField
-                required
-                minLength="5"
-                type="email"
-                value={email}
-                name="email"
-                onChange={event => setEmail(event.target.value)} />
-            </InputLabel>
-            <InputLabel>
-              Password:
-              <StyledTextField
-                required
-                minLength="5"
-                type="password"
-                value={password}
-                onChange={event => setPassword(event.target.value)} />
-            </InputLabel>
-            <StyledButton type="submit">Login</StyledButton>
-          </form>
-          <StyledButton onClick={() => {history.push("/")}}>No account? Signup</StyledButton>
-        </StyledSection>
-    }
-    { loggedIn && 
-      <section><p>You are logged in!</p>
-      <StyledButton onClick={() => {history.push("/checkout")}}>Checkout</StyledButton>
-      </section>
-    }
+      { !loggedIn &&
+          <StyledSection>
+            <form onSubmit={handleClick}>
+              <InputLabel>
+                Email:
+                <StyledTextField
+                  required
+                  minLength="5"
+                  type="email"
+                  value={email}
+                  name="email"
+                  onChange={event => setEmail(event.target.value)} />
+              </InputLabel>
+              <InputLabel>
+                Password:
+                <StyledTextField
+                  required
+                  minLength="5"
+                  type="password"
+                  value={password}
+                  onChange={event => setPassword(event.target.value)} />
+              </InputLabel>
+              <StyledButton type="submit">Login</StyledButton>
+            </form>
+            <StyledButton onClick={() => {history.push("/")}}>No account? Signup</StyledButton>
+          </StyledSection>
+      }
+      { loggedIn && 
+        <section><p>You are logged in!</p>
+        <StyledButton onClick={() => {history.push("/checkout")}}>Checkout</StyledButton>
+        </section>
+      }
     </StyledDiv>
   )
 }

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { Product } from './Product'
 
+// Main component that maps out all available products
 export const Products = () => {
   
   const allProducts = useSelector((store) => store.products)

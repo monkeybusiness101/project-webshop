@@ -6,7 +6,6 @@ import { Logout } from './Logout'
 const Image = styled.img`
   height: 200px;
 `
-
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -15,7 +14,7 @@ const Container = styled.div`
   color: white;
   font-size: 24px;
 `
-
+// Header component
 export const Header = () => {
 
 return (

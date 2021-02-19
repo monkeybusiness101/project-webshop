@@ -37,9 +37,8 @@ const StyledSection = styled.section`
     width: 500px;
   }
 `
-
+// Component for creating account
 export const Form = () => {
-  
   const dispatch = useDispatch()
   const history = useHistory()
   const [input, setInput] = useState({})
@@ -61,119 +60,119 @@ export const Form = () => {
 
   return (
     <StyledDiv>
-   { !loggedIn && <StyledSection>
-      <form onSubmit={handleSignup}>
-        <InputLabel>
-          Organization number:
-          <StyledTextField
-            required
-            minLength="5"
-            type="orgno"
-            value={input.orgNo}
-            name="orgno"
-            onChange={({target}) => setInput(state => ({...state,orgNo:target.value}))} />
-        </InputLabel>
-        <InputLabel>
-          Company name:
-          <StyledTextField
-            required
-            minLength="2"
-            type="compname"
-            value={input.companyName}
-            name="compname"
-            onChange={({target}) => setInput(state => ({...state,companyName:target.value}))} />
-        </InputLabel>
-        <InputLabel>
-          First Name:
-          <StyledTextField
-            required
-            minLength="2"
-            type="firstname"
-            value={input.firstName}
-            name="firstname"
-            onChange={({target}) => setInput(state => ({...state,firstName:target.value}))} />
-        </InputLabel>
-        <InputLabel>
-          Last Name:
-          <StyledTextField  
-            required
-            minLength="2"  
-            type="lastname"
-            value={input.lastName}
-            name="lastname"
-            onChange={({target}) => setInput(state => ({...state,lastName:target.value}))} />
-        </InputLabel>
-        <InputLabel>
-          Street address:
-          <StyledTextField
-            required
-            minLength="5"
-            type="streetaddr"
-            value={input.streetAddress}
-            name="streetaddr"
-            onChange={({target}) => setInput(state => ({...state,streetAddress:target.value}))} />
-        </InputLabel>
-        <InputLabel>
-          zip:
-          <StyledTextField
-            required
-            minLength="4"
-            type="zipcode"
-            value={input.zipCode}
-            name="zipcode"
-            onChange={({target}) => setInput(state => ({...state,zipCode:target.value}))} />
-        </InputLabel>
-        <InputLabel>
-          city:
-          <StyledTextField
-            required
-            minLength="2"
-            type="city"
-            value={input.city}
-            name="city"
-            onChange={({target}) => setInput(state => ({...state,city:target.value}))} />
-        </InputLabel>
-        <InputLabel>
-          cellno:
-          <StyledTextField
-            required
-            minLength="5"
-            type="cellno"
-            value={input.cellNo}
-            name="cellno"
-            onChange={({target}) => setInput(state => ({...state,cellNo:target.value}))} />
-        </InputLabel>
-        <InputLabel>
-          Email:
-          <StyledTextField
-            required
-            minLength="5"
-            type="email"
-            value={input.email}
-            name="email"
-            onChange={({target}) => setInput(state => ({...state,email:target.value}))} />
-        </InputLabel>
-        <InputLabel>
-          Password:
-          <StyledTextField
-            required
-            minLength="5"
-            type="password"
-            value={input.password}
-            name="password"
-            onChange={({target}) => setInput(state => ({...state,password:target.value}))} />
-        </InputLabel>
-        <StyledButton type="submit">Create account</StyledButton>
-      </form>
-      <StyledButton onClick={() => {history.push("/login")}}>Have account? Login</StyledButton>
-    </StyledSection>
-   }
-    { 
-      loggedIn && 
-      <section><p>You are logged in!</p>
-      <StyledButton onClick={() => {history.push("/checkout")}}>Checkout</StyledButton>
-      </section>
+    { !loggedIn && <StyledSection>
+        <form onSubmit={handleSignup}>
+          <InputLabel>
+            Organization number:
+            <StyledTextField
+              required
+              minLength="5"
+              type="orgno"
+              value={input.orgNo}
+              name="orgno"
+              onChange={({target}) => setInput(state => ({...state,orgNo:target.value}))} />
+          </InputLabel>
+          <InputLabel>
+            Company name:
+            <StyledTextField
+              required
+              minLength="2"
+              type="compname"
+              value={input.companyName}
+              name="compname"
+              onChange={({target}) => setInput(state => ({...state,companyName:target.value}))} />
+          </InputLabel>
+          <InputLabel>
+            First Name:
+            <StyledTextField
+              required
+              minLength="2"
+              type="firstname"
+              value={input.firstName}
+              name="firstname"
+              onChange={({target}) => setInput(state => ({...state,firstName:target.value}))} />
+          </InputLabel>
+          <InputLabel>
+            Last Name:
+            <StyledTextField  
+              required
+              minLength="2"  
+              type="lastname"
+              value={input.lastName}
+              name="lastname"
+              onChange={({target}) => setInput(state => ({...state,lastName:target.value}))} />
+          </InputLabel>
+          <InputLabel>
+            Street address:
+            <StyledTextField
+              required
+              minLength="5"
+              type="streetaddr"
+              value={input.streetAddress}
+              name="streetaddr"
+              onChange={({target}) => setInput(state => ({...state,streetAddress:target.value}))} />
+          </InputLabel>
+          <InputLabel>
+            zip:
+            <StyledTextField
+              required
+              minLength="4"
+              type="zipcode"
+              value={input.zipCode}
+              name="zipcode"
+              onChange={({target}) => setInput(state => ({...state,zipCode:target.value}))} />
+          </InputLabel>
+          <InputLabel>
+            city:
+            <StyledTextField
+              required
+              minLength="2"
+              type="city"
+              value={input.city}
+              name="city"
+              onChange={({target}) => setInput(state => ({...state,city:target.value}))} />
+          </InputLabel>
+          <InputLabel>
+            cellno:
+            <StyledTextField
+              required
+              minLength="5"
+              type="cellno"
+              value={input.cellNo}
+              name="cellno"
+              onChange={({target}) => setInput(state => ({...state,cellNo:target.value}))} />
+          </InputLabel>
+          <InputLabel>
+            Email:
+            <StyledTextField
+              required
+              minLength="5"
+              type="email"
+              value={input.email}
+              name="email"
+              onChange={({target}) => setInput(state => ({...state,email:target.value}))} />
+          </InputLabel>
+          <InputLabel>
+            Password:
+            <StyledTextField
+              required
+              minLength="5"
+              type="password"
+              value={input.password}
+              name="password"
+              onChange={({target}) => setInput(state => ({...state,password:target.value}))} />
+          </InputLabel>
+          <StyledButton type="submit">Create account</StyledButton>
+        </form>
+        <StyledButton onClick={() => {history.push("/login")}}>Have account? Login</StyledButton>
+      </StyledSection>
     }
+      { 
+        loggedIn && 
+        <section><p>You are logged in!</p>
+        <StyledButton onClick={() => {history.push("/checkout")}}>Checkout</StyledButton>
+        </section>
+      }
     </StyledDiv>
   )
 }

@@ -1,9 +1,10 @@
 import React, { useEffect } from "react"
-import { handleConfirmation } from '../reducers/user'
 import { useDispatch, useSelector } from "react-redux"
 import styled from 'styled-components'
 import { useParams, useHistory } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
+
+import { handleConfirmation } from '../reducers/user'
 
 const StyledButton = styled(Button)`
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -30,9 +31,8 @@ const StyledDiv = styled.div`
     flex-direction: column;
   }
 `
-
+// Confirmation page after purchase
 export const Confirmation = () => {
-
   const { userId, accessToken } = useParams()
   const dispatch = useDispatch()
   const cart = useSelector((store) => store.user.login?.userDetails)
@@ -55,6 +55,5 @@ export const Confirmation = () => {
         <StyledButton onClick={() => {history.push("/checkout")}}>Checkout</StyledButton>
       </StyledDiv>
     </StyledContainer>
-    
   )
 }

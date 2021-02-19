@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+// Reducer for all products that are available in the webshop
 const initialState = [
   {
     "producttype": "physical",

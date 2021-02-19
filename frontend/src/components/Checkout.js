@@ -44,9 +44,8 @@ const SmallerContainer = styled.div`
     flex-direction: column;
   }
   `
-
+// Main component for the whole checkout page. Here is where the briqpay checkout is rendered
 export const Checkout = () => {
-
   const dispatch = useDispatch()
   const history = useHistory()
   const checkout = useSelector((store) => store.user.login?.snippet?.snippet?.snippet)

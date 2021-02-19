@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+// Reducer for adding and removing items from store
 const initialState = {
     items: []
 }
